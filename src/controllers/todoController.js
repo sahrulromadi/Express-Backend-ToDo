@@ -44,14 +44,6 @@ const getTodo = async (req, res) => {
 const createTodo = async (req, res) => {
   try {
     const { title } = req.body;
-
-    // tangani dari request dulu sebelum di execute model
-    if (!title) {
-      return res.status(404).json({
-        message: "input tidak lengkap",
-      });
-    }
-
     const newTodo = await Todo.create(title);
 
     res.status(201).json({
@@ -70,13 +62,6 @@ const updateTodo = async (req, res) => {
   try {
     const { title, completed } = req.body;
     const { id } = req.params;
-
-    // jika inputan tidak lengkap
-    if (!title || !completed) {
-      return res.status(404).json({
-        message: "input tidak lengkap",
-      });
-    }
 
     const todo = await Todo.update(title, completed, id);
     const resultQuery = todo[0];
@@ -104,7 +89,6 @@ const updateTodo = async (req, res) => {
 const deleteTodo = async (req, res) => {
   try {
     const { id } = req.params;
-
     const result = await Todo.destroy(id);
 
     // jika id tidak ada

@@ -32,6 +32,7 @@ const update = async (title, completed, id) => {
     [title, completed, id]
   );
 
+  // membuat query baru agar bisa mendapatkan data created at dan updated at
   const [todoAfterUpdate] = await db.execute(
     "SELECT * FROM todos WHERE ID = ?",
     [id]
