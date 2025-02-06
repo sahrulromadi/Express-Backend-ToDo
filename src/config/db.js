@@ -12,8 +12,8 @@ pool.getConnection((err, connection) => {
     console.error("gagal terkoneksi database = ", err.message);
   } else {
     console.log("berhasil terkoneksi database");
-    connection.release();
+    connection.release(); // kembalikan kembali ke pool
   }
 });
 
-module.exports = pool;
+module.exports = pool.promise();
