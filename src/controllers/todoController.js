@@ -43,8 +43,8 @@ const getTodo = async (req, res) => {
 
 const createTodo = async (req, res) => {
   try {
-    const { title } = req.body;
-    const newTodo = await Todo.create(title);
+    const { title, completed } = req.body;
+    const newTodo = await Todo.create(title, completed);
 
     res.status(201).json({
       message: "berhasil create todo",

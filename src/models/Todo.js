@@ -12,15 +12,16 @@ const getTodo = async (id) => {
   return result[0];
 };
 
-const create = async (title) => {
-  const result = await db.execute("INSERT INTO todos (title) VALUES (?)", [
-    title,
-  ]);
+const create = async (title, completed) => {
+  const result = await db.execute(
+    "INSERT INTO todos (title, completed) VALUES (?, ?)",
+    [title, completed]
+  );
 
   return {
     id: result[0].insertId,
     title,
-    completed: false,
+    completed,
     created_at: new Date(),
     updated_at: new Date(),
   };

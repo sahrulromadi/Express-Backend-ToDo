@@ -8,7 +8,7 @@ const validateRequest = (req, res, next) => {
   }
 
   // validasi completed
-  if (!completed || typeof completed != "boolean") {
+  if (completed === undefined || typeof completed != "boolean") {
     errors.push("completed harus berupa boolean");
   }
 
