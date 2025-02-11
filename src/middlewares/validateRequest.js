@@ -1,27 +1,23 @@
-const validateRequest = (req, res, next) => {
-  const { title, completed } = req.body;
-  const errors = [];
+const { body, validationResult } = require("express-validator");
 
-  // validasi title
-  if (!title || typeof title != "string" || title.length < 3) {
-    errors.push("title harus lebih dari 3 dan berupa string");
-  }
+const validateRequest = [
+  body("title")
+    .isString()
+    .isLength({ min: 3 })
+    .withMessage("title harus berupa string dan lebih dari 3 karakter"),
+  body("completed").isBoolean().withMessage("completed harus berupa boolean"),
 
-  // validasi completed
-  if (completed === undefined || typeof completed != "boolean") {
-    errors.push("completed harus berupa boolean");
-  }
-
-  // jika ada error
-  if (errors.length > 0) {
-    return res.status(400).json({
-      message: "validasi gagal",
-      errors: errors,
-    });
-  }
-
-  // next ke controller
-  next();
-};
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: "validasi gagal",
+        errors: errors.array(),
+      });
+    }
+    next();
+  },
+];
 
 module.exports = validateRequest;
