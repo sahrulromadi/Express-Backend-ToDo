@@ -7,7 +7,11 @@ const PORT = process.env.PORT || 5000;
 
 // middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    methods: "GET, POST, PATCH, DELETE",
+  })
+);
 
 // route
 const todoRoute = require("./routes/todoRoute");

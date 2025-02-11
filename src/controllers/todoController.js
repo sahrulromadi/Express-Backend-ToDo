@@ -1,18 +1,14 @@
 const Todo = require("../models/Todo");
+const handleError = require("../utils/errorHandling");
+const handleSuccess = require("../utils/successHandling");
 
 const getTodos = async (req, res) => {
   try {
     const todos = await Todo.getAll();
 
-    res.status(200).json({
-      message: "berhasil get all todos",
-      data: todos,
-    });
+    handleSuccess(res, 200, "berhasil get all todos", todos);
   } catch (error) {
-    res.status(500).json({
-      message: "gagal get all todos",
-      serverError: error.message,
-    });
+    handleError(res, 500, "gagal get all todos", error);
   }
 };
 
@@ -23,21 +19,12 @@ const getTodo = async (req, res) => {
 
     // jika todo tidak ditemukan
     if (!result) {
-      return res.status(404).json({
-        message: "id tidak ditemukan di data",
-        data: null,
-      });
+      return handleError(res, 404, "id tidak ditemukan di data", "");
     }
 
-    res.status(200).json({
-      message: "berhasil get todo",
-      data: result,
-    });
+    handleSuccess(res, 200, "berhasil get todo", result);
   } catch (error) {
-    res.status(500).json({
-      message: "gagal get todo",
-      serverError: error.message,
-    });
+    handleError(res, 500, "gagal get todo", error);
   }
 };
 
@@ -46,15 +33,9 @@ const createTodo = async (req, res) => {
     const { title, completed } = req.body;
     const newTodo = await Todo.create(title, completed);
 
-    res.status(201).json({
-      message: "berhasil create todo",
-      data: newTodo,
-    });
+    handleSuccess(res, 201, "berhasil create todo", newTodo);
   } catch (error) {
-    res.status(500).json({
-      message: "gagal create todo",
-      serverError: error.message,
-    });
+    handleError(res, 500, "gagal create todo", error);
   }
 };
 
@@ -69,20 +50,12 @@ const updateTodo = async (req, res) => {
 
     // jika id tidak ada
     if (resultQuery.affectedRows < 1) {
-      return res.status(404).json({
-        message: "id tidak ditemukan di data",
-      });
+      return handleError(res, 404, "id tidak ditemukan di data", "");
     }
 
-    res.status(200).json({
-      message: "berhasil update todo",
-      data: todoAfterUpdate,
-    });
+    handleSuccess(res, 200, "berhasil update todo", todoAfterUpdate);
   } catch (error) {
-    res.status(500).json({
-      message: "gagal update todo",
-      serverError: error.message,
-    });
+    handleError(res, 500, "gagal update todo", error);
   }
 };
 
@@ -93,22 +66,12 @@ const deleteTodo = async (req, res) => {
 
     // jika id tidak ada
     if (result.affectedRows < 1) {
-      return res.status(404).json({
-        message: "id tidak ditemukan di data",
-      });
+      return handleError(res, 404, "id tidak ditemukan di data", "");
     }
 
-    res.status(200).json({
-      message: "berhasil delete todo",
-      data: {
-        id,
-      },
-    });
+    handleSuccess(res, 200, "berhasil delete todo", { id: id });
   } catch (error) {
-    res.status(500).json({
-      message: "gagal delete todo",
-      serverError: error.message,
-    });
+    handleError(res, 500, "gagal delete todo", error);
   }
 };
 
