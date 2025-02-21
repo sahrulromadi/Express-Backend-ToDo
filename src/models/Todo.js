@@ -10,6 +10,25 @@ const getAll = async () => {
   }
 };
 
+const getPaginationTodo = async (limit, offset) => {
+  try {
+    const [rows] = await db.query("SELECT * FROM todos LIMIT ? OFFSET ?", [
+      limit,
+      offset,
+    ]);
+
+    const [total] = await db.query("SELECT COUNT (*) AS total_data FROM todos");
+
+    // return object
+    return {
+      todos: rows,
+      total_data: total[0].total_data,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getTodo = async (id) => {
   try {
     const [result] = await db.execute("SELECT * FROM todos WHERE ID = ?", [id]);
@@ -83,6 +102,7 @@ const destroy = async (id) => {
 
 module.exports = {
   getAll,
+  getPaginationTodo,
   getTodo,
   searchByTitle,
   create,

@@ -12,6 +12,47 @@ const getTodos = async (req, res) => {
   }
 };
 
+const getPaginationTodos = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1; // ubah dulu menjadi INT
+    const limit = parseInt(req.query.limit) || 5;
+
+    // misal: (1 - 1) * 10 = 0 -> mulai dari data ke 0, (2 - 1) * 10 = 10 -> mulai dari data ke 11
+    const offset = (page - 1) * limit;
+
+    const { todos, total_data } = await Todo.getPaginationTodo(limit, offset);
+
+    // tangani jika data tidak ada
+    if (todos.length < 1) {
+      return handleSuccess(
+        res,
+        404,
+        "data tidak ada",
+        null,
+        (paginationData = {
+          page: page,
+          totalTodo: total_data,
+          totalPages: Math.ceil(total_data / limit), // 20 : 10 = 2 pages
+        })
+      );
+    }
+
+    handleSuccess(
+      res,
+      200,
+      "berhasil get pagination todo",
+      todos,
+      (paginationData = {
+        page: page,
+        totalTodo: total_data,
+        totalPages: Math.ceil(total_data / limit), // 20 : 10 = 2 pages
+      })
+    );
+  } catch (error) {
+    handleError(res, 500, "gagal get pagination todos", error);
+  }
+};
+
 const getTodo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -93,6 +134,7 @@ const deleteTodo = async (req, res) => {
 
 module.exports = {
   getTodos,
+  getPaginationTodos,
   getTodo,
   searchTodo,
   createTodo,
