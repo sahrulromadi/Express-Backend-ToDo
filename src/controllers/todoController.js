@@ -26,7 +26,7 @@ const getPaginationTodos = async (req, res) => {
     if (todos.length < 1) {
       return handleSuccess(
         res,
-        404,
+        200,
         "data tidak ada",
         null,
         (paginationData = {
@@ -60,7 +60,7 @@ const getTodo = async (req, res) => {
 
     // jika todo tidak ditemukan
     if (!result) {
-      return handleError(res, 404, "id tidak ditemukan di data", "");
+      return handleSuccess(res, 200, "id tidak ditemukan di data", null);
     }
 
     handleSuccess(res, 200, "berhasil get todo", result);
@@ -76,7 +76,7 @@ const searchTodo = async (req, res) => {
 
     // jika todo tidak ditemukan
     if (results.length < 1) {
-      return handleError(res, 404, "title tidak ditemukan di data", "");
+      return handleSuccess(res, 200, "id tidak ditemukan di data", null);
     }
 
     handleSuccess(res, 200, "berhasil search todo", results);
