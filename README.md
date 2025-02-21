@@ -20,7 +20,7 @@ Response:
   "message": "berhasil get all todos",
   "data": [
     {
-      "id": id,
+      "id": 1,
       "title": "title",
       "completed": 0,
       "created_at": "time",
@@ -44,7 +44,7 @@ Response:
   "message": "berhasil get pagination todo",
   "data": [
     {
-      "id": id,
+      "id": 1,
       "title": "title",
       "completed": 0,
       "created_at": "time",
@@ -73,7 +73,7 @@ Response:
   "message": "berhasil get todo",
   "data": [
     {
-      "id": id,
+      "id": 1,
       "title": "title",
       "completed": 0,
       "created_at": "time",
@@ -97,7 +97,7 @@ Response:
   "message": "berhasil search todo",
   "data": [
     {
-      "id": id,
+      "id": 1,
       "title": "title",
       "completed": 0,
       "created_at": "time",
@@ -131,7 +131,7 @@ Response:
   "message": "berhasil create todo",
   "data": [
     {
-      "id": id,
+      "id": 1,
       "title": "title",
       "completed": 0,
       "created_at": "time",
@@ -165,7 +165,7 @@ Response:
   "message": "berhasil update todo",
   "data": [
     {
-      "id": id,
+      "id": 1,
       "title": "title",
       "completed": 0,
       "created_at": "time",
