@@ -28,6 +28,22 @@ const getTodo = async (req, res) => {
   }
 };
 
+const searchTodo = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const [results] = await Todo.searchByTitle(q);
+
+    // jika todo tidak ditemukan
+    if (results.length < 1) {
+      return handleError(res, 404, "title tidak ditemukan di data", "");
+    }
+
+    handleSuccess(res, 200, "berhasil search todo", results);
+  } catch (error) {
+    handleError(res, 500, "gagal search todo", error);
+  }
+};
+
 const createTodo = async (req, res) => {
   try {
     const { title, completed } = req.body;
@@ -78,6 +94,7 @@ const deleteTodo = async (req, res) => {
 module.exports = {
   getTodos,
   getTodo,
+  searchTodo,
   createTodo,
   updateTodo,
   deleteTodo,

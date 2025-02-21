@@ -20,6 +20,18 @@ const getTodo = async (id) => {
   }
 };
 
+const searchByTitle = async (title) => {
+  try {
+    const rows = await db.execute("SELECT * FROM todos WHERE title LIKE ?", [
+      title,
+    ]);
+
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const create = async (title, completed) => {
   try {
     const result = await db.execute(
@@ -72,6 +84,7 @@ const destroy = async (id) => {
 module.exports = {
   getAll,
   getTodo,
+  searchByTitle,
   create,
   update,
   destroy,

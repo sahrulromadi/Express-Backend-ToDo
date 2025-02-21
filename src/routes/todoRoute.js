@@ -8,7 +8,8 @@ const todoController = require("../controllers/todoController");
 const validateRequest = require("../middlewares/validateRequest");
 
 router.get("/", todoController.getTodos);
-router.get("/:id", todoController.getTodo);
+router.get("/:id(\\d+)", todoController.getTodo); // gunakan regex agar bisa angka saja
+router.get("/search", todoController.searchTodo);
 router.post("/", validateRequest, todoController.createTodo);
 router.patch("/:id", validateRequest, todoController.updateTodo);
 router.delete("/:id", todoController.deleteTodo);
